@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "524307948128",
+    "project_id": "jayproj-f7afb",
+    "storage_bucket": "jayproj-f7afb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524307948128:android:226203e8f6e7ba906a5905",
+        "android_client_info": {
+          "package_name": "com.app.jay_feeling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524307948128-ffr5hrsevv0dur33b0fldap1393o7g3i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9sjHDkd4syKud-RG8JZBObWudEfet2qE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "524307948128-ffr5hrsevv0dur33b0fldap1393o7g3i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
