@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,7 +9,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+
   @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+
+    super.dispose();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -35,16 +45,18 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             margin: EdgeInsets.all(20),
             child: Column(
-              children: const [
+              children:  [
                 TextField(
-                    decoration: InputDecoration(
+                  controller: emailController,
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Username',
                     )
                 ),
                 TextField(
+                  controller: passController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password'
                     )
@@ -56,22 +68,23 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             margin: EdgeInsets.all(20),
             child: Column(
-              children: const [
+              children:  [
                 ElevatedButton(
-                  onPressed: signin,
+                  onPressed: signIn,
                   child: Text("Login"),
                 ),
                    Text("Or Sign Up?")
               ],
             ),
           ),
-
         ],
       ),
     );
   }
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(), password: passController.text.trim());
+  }
 }
 
-void signin() {
-  debugPrint("User sign in");
-}
+
