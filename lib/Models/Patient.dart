@@ -1,5 +1,7 @@
 class Patient {
   final String name;
   final String age;
-  Patient (this.name, this.age);
+  final String gender;
+  Patient (this.name, this.age, this.gender);
 }
+

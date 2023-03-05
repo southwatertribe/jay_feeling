@@ -50,10 +50,30 @@ class _WelcomePageState extends State<WelcomePage> {
             children: [
               Container(
                   height: 400,
-                  child: ListView.builder(
+                  child: patientList.length == 0 ?
+                  Center(child: Text("No Patients")) :
+                  ListView.builder(
+                    itemCount: patientList.length,
                       itemBuilder: (context, index) {
-                        return const Card(
-
+                        return Card(
+                          margin: EdgeInsets.all(4),
+                          elevation: 8,
+                          child: ListTile(
+                            title: Text(
+                              patientList[index].name,
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              patientList[index].age,
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
                         );
                       }
                   )
