@@ -1,9 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
+
 import 'package:jay_feeling/HomePage.dart';
-=======
->>>>>>> Stashed changes
+
 
 import 'package:jay_feeling/LoginPage.dart';
 
@@ -27,11 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
-<<<<<<< Updated upstream
       home: const HomePage(),
-=======
-      home: const LoginPage()
->>>>>>> Stashed changes
     );
   }
 }
