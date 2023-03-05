@@ -38,15 +38,25 @@ class _WelcomePageState extends State<WelcomePage> {
       appBar: AppBar(
           title: Text("Welcome Back")
       ),
-      body: Container(
-        height: 400,
-        child: ListView.builder(
-            itemBuilder: (context, index){
-              return Card(
-              );
-            }
-        )
+      body: Column(
+        children: [
+          Container(
+            height: 400,
+            child: ListView.builder(
+                itemBuilder: (context, index){
+                  return Card(
+                  );
+                }
+            )
+          ),
+          ElevatedButton(onPressed: signOut, child: Text("Sign Out"))
+        ],
       )
     );
   }
+}
+
+Future<void> signOut() async {
+  await FirebaseAuth.instance.signOut();
+
 }
