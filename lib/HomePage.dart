@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:jay_feeling/AuthPage.dart';
 import 'package:jay_feeling/LoginPage.dart';
 import 'package:jay_feeling/WelcomePage.dart';
 
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
           if (snapshot.hasData){
             return const WelcomePage();
           } else {
-            return const LoginPage();
+            return AuthPage();
           }
         },
       ),

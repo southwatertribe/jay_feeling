@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final VoidCallback clickSignUp;
+  const LoginPage({Key? key, required this.clickSignUp}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -64,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
               ],
             )
           ),
-          const Text("Forgot password?"),
           Container(
             margin: EdgeInsets.all(20),
             child: Column(
@@ -73,7 +74,18 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: signIn,
                   child: Text("Login"),
                 ),
-                   Text("Or Sign Up?")
+                   RichText(text: TextSpan(
+                     text: "Need an account?  ",
+                       style: TextStyle(color: Colors.black),
+                     children: [
+                       TextSpan(
+                         text: 'Sign Up',
+                         style: TextStyle(color: Colors.black),
+                         recognizer: TapGestureRecognizer()
+                           ..onTap = widget.clickSignUp
+                       )
+                     ]
+                   ))
               ],
             ),
           ),
