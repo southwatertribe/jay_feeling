@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -92,8 +93,14 @@ class _SignUpState extends State<SignUp> {
   Future signUp() async {
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passController.text.trim());
-      final user = FirebaseAuth.instance.currentUser!;
-
+      final userInfo = FirebaseAuth.instance.currentUser!; //Get current user to maker in firebase realtime database
+      final docUser = FirebaseFirestore.instance.collection('users').doc(userInfo.uid);
+      final userJSON = {
+        'email': userInfo.email,
+        'patients': []
+      };
+      
+      await docUser.set(userJSON); //Put user into db
     } on FirebaseAuthException catch (e) {
       print(e);
     }

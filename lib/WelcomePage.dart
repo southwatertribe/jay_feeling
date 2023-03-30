@@ -1,8 +1,13 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:jay_feeling/AddMember.dart';
 import 'Models/Patient.dart';
+import 'Models/AUser.dart';
+import 'package:jay_feeling/RecordPage.dart';
 
 
 class WelcomePage extends StatefulWidget {
@@ -16,12 +21,14 @@ class _WelcomePageState extends State<WelcomePage> {
 
 
   List<Patient> patientList = [];
-  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    final userInfo = FirebaseAuth.instance.currentUser!;
     void addPatientData(Patient patient) {
       setState(() {
+
+        //Get data from database
         patientList.add(patient);
       });
     }
@@ -46,36 +53,38 @@ class _WelcomePageState extends State<WelcomePage> {
           appBar: AppBar(
               title: Text("Welcome Back")
           ),
+
           body: Column(
             children: [
               Container(
                   height: 400,
-                  child: patientList.length == 0 ?
-                  Center(child: Text("No Patients")) :
-                  ListView.builder(
-                    itemCount: patientList.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          margin: EdgeInsets.all(4),
-                          elevation: 8,
-                          child: ListTile(
-                            title: Text(
-                              patientList[index].name,
-                              style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.blueGrey,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              patientList[index].age,
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
+                  // child: StreamBuilder(
+                  //   stream: readPatientStream(),
+                  //   builder: (context, snapshot){
+                  //
+                  //     if(snapshot.hasData){
+                  //       final patients = snapshot.data!;
+                  //       return ListView(
+                  //           children: patients.map(buildPatientObject).toList()
+                  //       );
+                  //     } else {
+                  //       return Text("Errors");
+                  //     }
+                  //
+                  //   },
+                  // ),
+                  child: FutureBuilder(
+                    future: readPatients(),
+                    builder: (context, snapshot) {
+                      final List<dynamic> patientList = snapshot.data;
+                      print('PATIENTS UP HEYA${patientList}');
+                        return ListView.builder(
+                          itemCount: patientList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return generatePatientWidget(patientList[index]);
+                          },
                         );
-                      }
+                    },
                   )
               ),
               const ElevatedButton(onPressed: signOut, child: Text("Sign Out"))
@@ -85,7 +94,66 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 }
 
+Future<void> signOut() async {
+  await FirebaseAuth.instance.signOut();
+}
+// //Builds a patient tile
+// Widget buildAPatient(apatient) => ListTile(
+//
+//   leading: CircleAvatar(child: Text('${apatient['name']}')),
+//
+//
+// );
 
-    Future<void> signOut() async {
-      await FirebaseAuth.instance.signOut();
-  }
+//
+// Widget buildPatientObject(Patient apatient) => ListTile(
+//
+//   leading: CircleAvatar(child: Text('${apatient.name}')),
+//
+//
+// );
+
+//
+// Future readAUser() async {
+//   final userInfo = FirebaseAuth.instance.currentUser!;
+//   print("********* USER INFO IS ${userInfo.uid} *********");
+//   final docUser = FirebaseFirestore.instance.collection('users').doc(userInfo.uid);
+//   final snapshot = await docUser.get();
+//   print(snapshot.data()!['patients'].runtimeType);
+//   // if (snapshot.exists) {
+//   //   print(AUser.fromJSON(snapshot.data()!));
+//   //
+//   //
+//   // }
+//   return snapshot.data()!['patients'];
+// }
+
+Future readPatients() async {
+  final userInfo = FirebaseAuth.instance.currentUser!;
+  print("********* USER INFO IS ${userInfo.uid} *********");
+  final docUser = FirebaseFirestore.instance.collection('users').doc(userInfo.uid);
+  final snapshot = await docUser.get();
+  final patients = snapshot.data()!['patients'];
+  print('${patients}');
+  return patients;
+
+}
+
+// Stream<List<Patient>> readPatientStream()=> FirebaseFirestore.instance
+//     .collection('users')
+//     .doc(FirebaseAuth.instance.currentUser!.uid)
+//     .snapshots()
+//     .map((snapshot) => snapshot.data()!['patients'].map((patient)=>Patient.patientfromJSON(patient)));
+
+Widget generatePatientWidget(dynamic item) {
+  return ListTile(
+    leading: Text('${item["name"]}'),
+      onTap: () {
+      print("tapped");
+        // Navigator.push(
+        //     item.context, MaterialPageRoute(builder: (context)=> RecordAudioScreen())
+        // );
+      }
+  );
+}
+
