@@ -81,7 +81,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         return ListView.builder(
                           itemCount: patientList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return generatePatientWidget(patientList[index]);
+                            return generatePatientWidget(context, patientList[index]);
                           },
                         );
                     },
@@ -145,14 +145,14 @@ Future readPatients() async {
 //     .snapshots()
 //     .map((snapshot) => snapshot.data()!['patients'].map((patient)=>Patient.patientfromJSON(patient)));
 
-Widget generatePatientWidget(dynamic item) {
+Widget generatePatientWidget(context, dynamic item) {
   return ListTile(
     leading: Text('${item["name"]}'),
       onTap: () {
       print("tapped");
-        // Navigator.push(
-        //     item.context, MaterialPageRoute(builder: (context)=> RecordAudioScreen())
-        // );
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context)=> RecordPage())
+        );
       }
   );
 }
