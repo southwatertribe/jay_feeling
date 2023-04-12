@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:jay_feeling/api/audio_handler.dart';
+import 'package:jay_feeling/api/theplayer.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({Key? key}) : super(key: key);
@@ -11,26 +13,29 @@ class RecordPage extends StatefulWidget {
 class _RecordPageState extends State<RecordPage> {
   //Instance of audioRecorder
   final recorder = SoundRecorder();
+  final player = thePlayer();
+
+  bool isPlaying = false;
+
   @override
   void initState() {
     super.initState();
 
     recorder.init();
+    player.init();
   }
 
   @override
   void dispose(){
+    player.dispose();
     recorder.dispose();
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children:[
-          buildStart(),
-          buildPlaybackButton(),
-        ]
+      body: Center(
+        child: buildStart(),
       ),
     );
   }
@@ -55,16 +60,13 @@ class _RecordPageState extends State<RecordPage> {
   }
 
   Widget buildPlaybackButton() {
-    final isPlaying = recorder.isPlaying;
+    final isPlaying = false;
     final icon = isPlaying ? Icons.stop : Icons.play_arrow;
     final text = isPlaying ? 'STOP': 'PLAY';
-    final primary = isPlaying ? Colors.red : Colors.white;
-    final onPrimary = isPlaying ? Colors.red : Colors.white;
 
     return ElevatedButton.icon(
       onPressed: () async {
-        final isplaying = await recorder.togglePlay();
-        setState(() {});
+        await player.togglePlaying(whenFinished: (){});
       },
       icon: Icon(icon),
       label: Text(text),

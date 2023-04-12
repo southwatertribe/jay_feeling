@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:jay_feeling/AddMember.dart';
 import 'Models/Patient.dart';
 import 'Models/AUser.dart';
-import 'package:jay_feeling/RecordPage.dart';
+import 'package:jay_feeling/RecordPageTest.dart';
 
 
 class WelcomePage extends StatefulWidget {

@@ -1,17 +1,20 @@
-import 'package:flutter_sound_lite/flutter_sound.dart';
+
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 
 
 class SoundRecorder {
   static final audioSavePath = 'voice_audio.aac';
+  // final audioPlayer = AudioPlayer();
   FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialized = false;
 
   //playback
-  FlutterSoundPlayer? _audioPlayer;
-  bool isPlayerInitialized = false;
-  bool isPlaying = false;
+  // FlutterSoundPlayer? _audioPlayer;
+  // bool isPlayerInitialized = false;
+  // bool isPlaying = false;
 
   bool get isRecording => _audioRecorder!.isRecording;
 
@@ -46,19 +49,23 @@ class SoundRecorder {
   }
   Future _stop() async {
     if (!_isRecorderInitialized) return;
-    await _audioRecorder!.stopRecorder();
-  }
-  Future _play() async {
-    if (!isPlayerInitialized) return;
-    await _audioPlayer!.startPlayer(fromURI: audioSavePath);
-    isPlaying = true;
-  }
 
-  Future _stopPlayback() async {
-    if (!isPlayerInitialized) return;
-    await _audioPlayer!.stopPlayer();
-    isPlaying = false;
+    await _audioRecorder!.stopRecorder();
+
+
+
   }
+  // Future _play() async {
+  //   if (!isPlayerInitialized) return;
+  //   await audioPlayer.play(audioSavePath);
+  //   isPlaying = true;
+  // }
+
+  // Future _stopPlayback() async {
+  //   if (!isPlayerInitialized) return;
+  //   await audioPlayer!.stopPlayer();
+  //   isPlaying = false;
+  // }
 
 
   Future toggleRecording() async {
@@ -69,11 +76,11 @@ class SoundRecorder {
     }
   }
 
-  Future togglePlay() async {
-    if(_audioPlayer!.isStopped) {
-      await _play();
-    } else {
-      await _stopPlayback();
-    }
-  }
+  // Future togglePlay() async {
+  //   if(audioPlayer!.isStopped) {
+  //     await _play();
+  //   } else {
+  //     await _stopPlayback();
+  //   }
+  // }
 }
