@@ -20,6 +20,7 @@ class RecordPage extends StatefulWidget {
 
 class _RecordPageState extends State<RecordPage> {
   int _counter = 0;
+  String? _response;
   //Use to conditioally render send button
   bool _isRecordingDone = false;
   final recorder = FlutterSoundRecorder();
@@ -53,7 +54,7 @@ class _RecordPageState extends State<RecordPage> {
   }
 
   Future record() async {
-
+    resetResponse();
     if (!isRecorderReady) return;
     final tempDir = await getTemporaryDirectory();
     final filePath = '${tempDir.path}/audio.wav';
@@ -69,6 +70,13 @@ class _RecordPageState extends State<RecordPage> {
     _isRecordingDone = true;
   }
 
+  void resetResponse() {
+    setState(() {
+      _response = null;
+    });
+  }
+
+
   Future<void> sendAudioFile(String filePath) async {
     final url = Uri.parse('https://Jays-Feeling-App.danielcarter25.repl.co/analyze');
     final request = http.MultipartRequest('POST', url);
@@ -83,7 +91,11 @@ class _RecordPageState extends State<RecordPage> {
 
     if (response.statusCode == 200) {
       print('Uploaded successfully');
-      _isRecordingDone = false;
+      setState(() {
+        _response = responseBody;
+
+        _isRecordingDone = false;
+      });
     } else {
       print('Upload failed: ${response.statusCode}, Response: $responseBody');
     }
@@ -93,7 +105,7 @@ class _RecordPageState extends State<RecordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Yuh"),
+        title: Text("WHAT"),
       ),
       body: Center(
         child: Column(
@@ -117,6 +129,7 @@ class _RecordPageState extends State<RecordPage> {
                 );
               },
             ),
+            if (_response != null) Text("recorded"),
             ElevatedButton(
               child: Icon(
                 recorder.isRecording ? Icons.stop : Icons.mic,
