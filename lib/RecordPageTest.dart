@@ -12,11 +12,14 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RecordPage extends StatefulWidget {
-  const RecordPage({Key? key}) : super(key: key);
+  final String patientName;
+  const RecordPage({Key? key, required this.patientName}) : super(key: key);
+
 
   @override
   State<RecordPage> createState() => _RecordPageState();
 }
+
 
 class _RecordPageState extends State<RecordPage> {
   int _counter = 0;
@@ -78,7 +81,8 @@ class _RecordPageState extends State<RecordPage> {
 
 
   Future<void> sendAudioFile(String filePath) async {
-    final url = Uri.parse('https://Jays-Feeling-App.danielcarter25.repl.co/analyze');
+    //https://Jays-Feeling-App.danielcarter25.repl.co/analyze
+    final url = Uri.parse('http://52.53.254.134:5000');
     final request = http.MultipartRequest('POST', url);
     request.files.add(await http.MultipartFile.fromPath(
       'audio_file',
@@ -105,7 +109,7 @@ class _RecordPageState extends State<RecordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("WHAT"),
+        title: Text(widget.patientName),
       ),
       body: Center(
         child: Column(
@@ -129,7 +133,6 @@ class _RecordPageState extends State<RecordPage> {
                 );
               },
             ),
-            if (_response != null) Text("recorded"),
             ElevatedButton(
               child: Icon(
                 recorder.isRecording ? Icons.stop : Icons.mic,
@@ -154,7 +157,7 @@ class _RecordPageState extends State<RecordPage> {
               }
                   : null,
             ),
-
+            if (_response != null) Text(_response!),
           ],
         ),
       ),

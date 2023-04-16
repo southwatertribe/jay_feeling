@@ -151,7 +151,7 @@ Widget generatePatientWidget(context, dynamic item) {
       onTap: () {
       print("tapped");
         Navigator.push(
-            context, MaterialPageRoute(builder: (context)=> RecordPage())
+            context, MaterialPageRoute(builder: (context)=> RecordPage(patientName: item["name"],))
         );
       }
   );
