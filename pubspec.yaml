@@ -45,6 +45,7 @@ dependencies:
   assets_audio_player: ^3.0.3+3
   http: ^0.13.5
   audioplayers: ^3.0.1
+  file_picker: ^5.2.9
 
 
 

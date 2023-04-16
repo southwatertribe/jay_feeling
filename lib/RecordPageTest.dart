@@ -82,12 +82,12 @@ class _RecordPageState extends State<RecordPage> {
 
   Future<void> sendAudioFile(String filePath) async {
     //https://Jays-Feeling-App.danielcarter25.repl.co/analyze
-    final url = Uri.parse('http://52.53.254.134:5000');
+    final url = Uri.parse('http://52.53.254.134:5000/fetch_prediction');
     final request = http.MultipartRequest('POST', url);
     request.files.add(await http.MultipartFile.fromPath(
-      'audio_file',
+      'audio',
       filePath,
-      contentType: MediaType('audio', 'aac'),
+      contentType: MediaType('audio', 'wav'),
     ));
     final response = await request.send();
     final responseBodyBytes = await response.stream.toBytes();
