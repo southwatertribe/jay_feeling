@@ -2,10 +2,11 @@
     package="com.example.jay_feeling">
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-   <application
-        android:label="jay_feeling"
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:label="Jay's Feeling"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -146,14 +146,16 @@ Future readPatients() async {
 //     .map((snapshot) => snapshot.data()!['patients'].map((patient)=>Patient.patientfromJSON(patient)));
 
 Widget generatePatientWidget(context, dynamic item) {
-  return ListTile(
-    leading: Text('${item["name"]}'),
-      onTap: () {
-      print("tapped");
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context)=> RecordPage(patientName: item["name"],))
-        );
-      }
+  return Card(
+    child: ListTile(
+      leading: Text('${item["name"]}', style: TextStyle(fontSize: 20),),
+        onTap: () {
+        print("tapped");
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context)=> RecordPage(patientName: item["name"],))
+          );
+        }
+    ),
   );
 }
 
